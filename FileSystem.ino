@@ -7,7 +7,7 @@
 #define DHTTYPE DHT22
 
 #define IO_USERNAME  "Willianc12"
-#define IO_KEY       "aio_FtGU81raG43k8Ya40dTlCGE3e1wv" 
+#define IO_KEY       "" 
 const char* ssid = "NPITI-IoT";
 const char* password = "NPITI-IoT";
 
@@ -134,8 +134,8 @@ void openFS(void) {
 void setup() {
   Serial.begin(115200);
 
-  //Serial.println("abrir arquivo");
-  //openFS(); 
+  Serial.println("abrir arquivo");
+  openFS(); 
 
   dht.begin();
 
@@ -147,8 +147,8 @@ void setup() {
 void loop() {
   
   if (!client.connected()) {
-    //String test = readFile("/logsAula.txt");
-    //Serial.println(test);
+    String test = readFile("/logsAula.txt");
+    Serial.println(test);
 
     reconnect();
   }
@@ -172,10 +172,10 @@ void loop() {
   Serial.print(t);
   Serial.println(F("°C "));
 
-  //if (!client.connected() || t > 30) {
-    //str = "Temperatura, Amostra " + String(count) + " : " + String(t) + "°C ";
-    //writeFile(str , "/logsAula.txt");
-  //}
+  if (!client.connected() || t > 30) {
+    str = "Temperatura, Amostra " + String(count) + " : " + String(t) + "°C ";
+    writeFile(str , "/logsAula.txt");
+  }
 
   client.publish("Willianc12/feeds/temperatura", s_temp);
 
